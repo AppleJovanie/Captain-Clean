@@ -7,8 +7,9 @@ public class PlayerLife : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
+    private Vector3 initialPosition;
 
-  
+
 
     private void Start()
     {
