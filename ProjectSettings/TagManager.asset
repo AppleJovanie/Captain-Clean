@@ -15,6 +15,12 @@ TagManager:
   - Obstacle
   - Bullet
   - Boss
+  - Enemies1
+  - Impetigo
+  - HeadLice
+  - Scabies
+  - AthleteFoot
+  - Cavity
   layers:
   - Default
   - TransparentFX

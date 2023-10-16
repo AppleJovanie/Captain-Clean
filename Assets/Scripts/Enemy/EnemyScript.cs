@@ -49,7 +49,7 @@ public class EnemyScript : MonoBehaviour
             // Re-enable the collider after a delay
             StartCoroutine(EnableColliderAfterDelay(collisionDisableDelay));
         }
-        else if (collision.transform.CompareTag("Obstacle") || collision.transform.CompareTag("Boss")) {
+        else if (collision.transform.CompareTag("Obstacle") || collision.transform.CompareTag("Boss") || collision.transform.CompareTag("Trap")){
             // Change the walking direction when colliding with an obstacle
             walkingDirection *= -1;
         }

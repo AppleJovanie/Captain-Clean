@@ -54,10 +54,7 @@ public class MovementChar : MonoBehaviour
             ShowGameOverUI();
         }     
     }
-    public void Proceed()
-    {
-        SceneManager.LoadScene("Lvl2");
-    }
+   
     public void pointerDownLeft()
     {
         transform.rotation = Quaternion.Euler(0, 180, 0);
