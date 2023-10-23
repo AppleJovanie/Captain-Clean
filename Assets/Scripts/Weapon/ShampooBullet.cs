@@ -6,6 +6,7 @@ public class ShampooBullet : MonoBehaviour
 {
     public float life = 3;
 
+
     void Awake()
     {
         Destroy(gameObject, life);
@@ -13,11 +14,12 @@ public class ShampooBullet : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("HeadLice"))// Change to tag in enemey
+        if (collision.gameObject.CompareTag("HeadLice")||
+            collision.gameObject.CompareTag("BossLice"))
         {
-            // Destroy objects tagged as "Trap"
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject); // Destroy objects tagged as "HeadLice"
         }
+    
 
         // Always destroy the bullet
         Destroy(gameObject);

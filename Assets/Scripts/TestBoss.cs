@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TestBoss : MonoBehaviour
 {
-    public float moveSpeed = 3.0f; // Enemy movement speed
+    public float moveSpeed = 5.0f; // Enemy movement speed
     public float collisionDisableDelay = 1.0f; // Delay before re-enabling the collider
     public string playerTag = "Player"; // Tag of the player to follow
 
@@ -15,20 +16,25 @@ public class TestBoss : MonoBehaviour
 
     private int bulletsHitCount = 0; // Number of bullets that hit the boss
     private bool isDead = false; // Flag to track if the boss is already dead
+    public GameObject youWonCanvas;
 
-    public int bulletsToDestroyBoss = 15;
+    [SerializeField] public int bulletsToDestroyBoss = 15; // Number of bullets required to destroy the boss
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        enemyCollider = GetComponent<Collider2D>();
+        enemyCollider = GetComponent <Collider2D>();
 
         // Find the player's transform based on their tag (assuming the player has the "Player" tag)
         GameObject player = GameObject.FindGameObjectWithTag(playerTag);
         if (player != null)
         {
             playerTransform = player.transform;
+        }
+        if (youWonCanvas != null)
+        {
+            youWonCanvas.SetActive(false); // Make the Canvas inactive initially
         }
         else
         {
@@ -50,19 +56,23 @@ public class TestBoss : MonoBehaviour
             spriteRenderer.flipX = (movementDirection.x < 0);
         }
     }
-
+    //Bullet For HeadLice Boss
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet") && !isDead)
+        if (collision.gameObject.CompareTag("ShampooBullet") && !isDead)
         {
             // Increment the hit count
             bulletsHitCount++;
 
-            // Check if the boss has been hit by the required number of bullets (2 in this case)
             if (bulletsHitCount >= bulletsToDestroyBoss)
             {
                 // Call a method to handle boss death (e.g., play a death animation, trigger an event, etc.)
                 Die();
+
+                if (youWonCanvas != null)
+                {
+                    youWonCanvas.SetActive(true);
+                }
             }
         }
     }
@@ -71,7 +81,7 @@ public class TestBoss : MonoBehaviour
     {
         // Add any logic you want to handle the boss's death here
         // For example, you can play a death animation, trigger an event, or destroy the boss object
-      
+
         Destroy(gameObject);
 
         // Set the flag to prevent further collisions and destruction

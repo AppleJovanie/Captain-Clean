@@ -21,6 +21,21 @@ TagManager:
   - Scabies
   - AthleteFoot
   - Cavity
+  - Checkpoint
+  - BossLice
+  - Dirt
+  - Soap
+  - SoapBullet
+  - ToothBrushBullet
+  - ShampooBullet
+  - Galisorous
+  - Impetaigor
+  - Alifungor
+  - CavityBoss
+  - Shampoo
+  - ToothBrush
+  - Soap1
+  - Soap2
   layers:
   - Default
   - TransparentFX

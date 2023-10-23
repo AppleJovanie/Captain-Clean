@@ -5,25 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    private GameMaster gm;
-    private GameObject playerPosObject; // Reference to the PlayerPos GameObject
-
-    private Vector2 defaultStartPosition = new Vector2(-7.16f, 0.24f);
+    public GameObject continueButton;
+    private bool checkpointReached = false;
 
     private void Start()
     {
-        playerPosObject = GameObject.Find("PlayerPos"); // Set this in the Inspector or through code
-        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
+        // Check if a checkpoint has been reached in the game
+        checkpointReached = PlayerPrefs.GetInt("CheckpointReached", 0) == 1;
+
+        // Set the "Continue" button's visibility based on whether a checkpoint has been reached
+        continueButton.SetActive(checkpointReached);
     }
-    //For Debugging 
+
     public void NewGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-
-    public void LoadGame()
-    {
+        PlayerPrefs.SetInt("CheckpointReached", 0);
+        PlayerPrefs.Save();
+        continueButton.SetActive(false); // Set the "Continue" button to not visible
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -32,4 +30,28 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
+
+    public void Continue()
+    {
+        // Get the scene name where the player reached the last checkpoint
+        string sceneNameToLoad = PlayerPrefs.GetString("LastCheckpointScene", SceneManager.GetActiveScene().name);
+
+        // Load the scene
+        SceneManager.LoadScene(sceneNameToLoad);
+
+        // Get the checkpoint position from PlayerPrefs
+        float checkpointPositionX = PlayerPrefs.GetFloat("CheckpointPositionX");
+        float checkpointPositionY = PlayerPrefs.GetFloat("CheckpointPositionY");
+
+        // Find the player GameObject (make sure it's tagged as "Player")
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        // Set the player's position to the checkpoint position
+        if (player != null)
+        {
+            player.transform.position = new Vector3(checkpointPositionX, checkpointPositionY, player.transform.position.z);
+        }
+    }
 }
+   
+

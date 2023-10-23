@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float life = 3;
     private int bulletsHitBoss = 0;
-    public int bulletsToDestroyBoss = 4; // Number of bullets required to destroy the boss
+    public int bulletsToDestroyBoss = 2; // Number of bullets required to destroy the boss
 
     void Awake()
     {

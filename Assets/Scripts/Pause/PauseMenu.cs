@@ -9,8 +9,8 @@ public class PauseMenu : MonoBehaviour
    public static bool GameisPaused = false;
     public GameObject pauseMenuUI;
     public static bool isGameOver;
-    public GameObject gameOverScreen;
-    public GameObject pauseMenuScreen;
+
+    private int CurrentSceneIndex;
 
 
     // Update is called once per frame
@@ -44,12 +44,17 @@ public class PauseMenu : MonoBehaviour
     }
     public void Loadmenu()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+       
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("MainMenu");
+        
+        
     }
+
     public void QuitGame()
     {
         Debug.Log("Quit");
         Application.Quit();
     }
+    
 }

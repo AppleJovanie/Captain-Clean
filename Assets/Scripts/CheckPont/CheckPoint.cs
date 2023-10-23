@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CheckPoint : MonoBehaviour
+public class Checkpoint : MonoBehaviour
 {
-    private GameMaster gm;
-
-    void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        gm = GameObject.FindGameObjectWithTag("GM").GetComponent<GameMaster>();
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            gm.lastCheckpointPos = transform.position;   
+            // Store the checkpoint position and the scene name in PlayerPrefs
+            PlayerPrefs.SetInt("CheckpointReached", 1);
+            PlayerPrefs.SetFloat("CheckpointPositionX", transform.position.x);
+            PlayerPrefs.SetFloat("CheckpointPositionY", transform.position.y);
+            PlayerPrefs.SetString("LastCheckpointScene", SceneManager.GetActiveScene().name);
+            PlayerPrefs.Save();
+
+            Debug.Log("Checkpoint reached!");
         }
     }
 }

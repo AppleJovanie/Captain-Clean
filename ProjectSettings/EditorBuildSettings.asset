@@ -6,15 +6,39 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
+    path: Assets/Scenes/Menu/MainMenu.unity
     guid: 279059befe3d624429c598aa4b5eef07
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
+    path: Assets/Scenes/Levels/Level1.unity
     guid: ee2bf4c2cbf46304da8f26b5943b37e4
   - enabled: 1
-    path: Assets/Scenes/Level2.unity
+    path: Assets/Scenes/Boss/Kutonis.unity
+    guid: 68f665f0d90c5ba488b93dff76df0f6f
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level2.unity
     guid: dae9446fc18ab4547ba9d061fc3c0148
   - enabled: 1
-    path: Assets/Scenes/Level3.unity
+    path: Assets/Scenes/Boss/Impetaigor.unity
+    guid: 572ebc4ef35e12240b41d866af2c2035
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level3.unity
     guid: 0b8462906c90fa64ebb77b3246d7fda2
+  - enabled: 1
+    path: Assets/Scenes/Boss/Galisorous.unity
+    guid: dcb99071c8a097d4c93d459070eff460
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level4.unity
+    guid: 070f51836d2d5114dba0857e42511ec5
+  - enabled: 1
+    path: Assets/Scenes/Boss/Alifungor.unity
+    guid: 74180c08c57b27841b01a7fe948070d5
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level5.unity
+    guid: dfc6142f945ee7d4c8cc2e30a0decabc
+  - enabled: 1
+    path: Assets/Scenes/Boss/Yiietievac.unity
+    guid: 9acf2b0f8a337a345a8267d18e119942
+  - enabled: 1
+    path: Assets/Scenes/Menu/Minigame.unity
+    guid: 0840f9d1379df584fae221a40a040f8d
   m_configObjects: {}

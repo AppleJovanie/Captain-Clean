@@ -2,65 +2,97 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerLife : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    private Vector3 respawnPoint;
     private Animator anim;
-    private Vector3 initialPosition;
+    private Rigidbody2D rb;
 
-
+    public string[] destroyOnCollisionTags = { "HeadLice", "Scabies", "AthleteFoot", "Cavity", "Impetigo" };
+    public string[] Bosses = { "BossLice", "Impetaigor", "Galisorous", "Alifungor", "CavityBoss" };
+    public string[] trapses = { "Trap" };
+  
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        rb= GetComponent<Rigidbody2D>();        
+        respawnPoint = transform.position;
+        anim=GetComponent<Animator>();  
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        string tag = collision.gameObject.tag;
+        string boss = collision.gameObject.tag;
+        string traps = collision.gameObject.tag;
+      
 
-        if (collision.gameObject.CompareTag("Enemy") || 
-            collision.gameObject.CompareTag("Trap") || 
-            collision.gameObject.CompareTag("Boss"))
+        if (ArrayContains(destroyOnCollisionTags, tag))
+        {
+            Die();
+            Destroy(collision.gameObject);
+        }
+        else if (ArrayContains(trapses, traps))
+        {
+            Die();
+        }
+        else if (ArrayContains(Bosses, boss))
         {
             Die();
             if (HealthManager.health <= 0)
             {
-                // Player has no health left, restart the game
-                RestartGame();
+               // RestartGame();
             }
             else
             {
-                // Reset player position and any other respawn logic
                 Respawn();
             }
-
         }
-      
     }
 
-        private void Respawn()
+    private bool ArrayContains(string[] array, string value)
     {
-        // Reset player position to the starting position
-        transform.position = new Vector3(0, 0, 0);
+        foreach (string item in array)
+        {
+            if (item == value)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Checkpoint")|| collision.CompareTag("HeadLice"))
+        {
+            respawnPoint = collision.transform.position;
+        }
+       
+    }
+
+    private void Respawn()
+    {
+        transform.position = respawnPoint;
     }
 
     private void RestartGame()
     {
-        // Reload the current scene to restart the game
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
     private void Die()
     {
-        // Subtract health
         HealthManager.health--;
-
-        // Update the health bar
         HealthManager.Instance.UpdateHealthBar();
-
-        //Set the animation trigger here for death
-
+        
+        if(HealthManager.health <=0)
+        {
+            anim.SetTrigger("death");
+          
+        }
+      
     }
 }
- 

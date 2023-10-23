@@ -18,6 +18,9 @@ public class MovementChar : MonoBehaviour
     private Vector3 respawnPoint;
     public GameObject fallDetector;
     public GameObject youWon;
+    private enum MovementState {idle, running, jumping ,falling }
+    MovementState state;
+    
 
     void Start()
     {
@@ -27,6 +30,7 @@ public class MovementChar : MonoBehaviour
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         respawnPoint = transform.position;
+      
     }
     private void ShowGameOverUI()
     {
@@ -37,10 +41,9 @@ public class MovementChar : MonoBehaviour
     void Update()
     {
         Movement();
-
-       
        
         fallDetector.transform.position = new Vector2(transform.position.x,fallDetector.transform.position.y);
+        anim.SetInteger("state", (int)state);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -49,39 +52,42 @@ public class MovementChar : MonoBehaviour
             // Reset the object's position to the respawn point
             transform.position = respawnPoint;
         }
+      
+        // Finish Line
         if (collision.gameObject.CompareTag("FinishLine"))
         {
             ShowGameOverUI();
-        }     
+        }    
     }
-   
+ 
+
     public void pointerDownLeft()
     {
         transform.rotation = Quaternion.Euler(0, 180, 0);
         moveLeft = true;
-        anim.SetBool("running", true); // Start running animation when moving left
-       
+        state = MovementState.running; // Start running animation when moving left
+
     }
 
     public void pointerUpLeft()
     {
         moveLeft = false;
-        anim.SetBool("running", false); // Stop running animation when not moving left
+        state = MovementState.idle; // Stop running animation when not moving left
     }
 
     public void pointerDownRight()
     {
         
         transform.rotation = Quaternion.Euler(0, 0, 0);
-        moveRight = true;
-        anim.SetBool("running", true); // Start running animation when moving right
+        moveRight = true;      
+        state = MovementState.running;
        
     }
 
     public void pointerUpRight()
     {
         moveRight = false;
-        anim.SetBool("running", false); // Stop running animation when not moving right
+        state = MovementState.idle; // Stop running animation when not moving right
     }
 
     void Movement()
@@ -106,11 +112,16 @@ public class MovementChar : MonoBehaviour
         if (rb.velocity.y == 0)
         {
             rb.velocity = Vector2.up * jumpSpeed;
-        }
+            state = MovementState.jumping;
+        }  
     }
+
 
     private void FixedUpdate()
     {
+
+      
+
         rb.velocity = new Vector2(horizontalMove, rb.velocity.y);
     }
 }
