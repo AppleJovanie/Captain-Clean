@@ -15,6 +15,7 @@ public class EnemyScript : MonoBehaviour
     private Collider2D enemyCollider; // Reference to the enemy's Collider2D
     private int walkingDirection = 1; // 1 for right, -1 for left
     private Vector3 respawnPoint;
+  
 
     public bool canDealDamage = true;
 
@@ -24,7 +25,6 @@ public class EnemyScript : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCollider = GetComponent<Collider2D>();
         respawnPoint = transform.position;
-
 
     }
 
@@ -49,7 +49,7 @@ public class EnemyScript : MonoBehaviour
            
             enemyCollider.enabled = false;
             canDealDamage = false;
-
+            
 
             // Re-enable the collider after a delay
             StartCoroutine(EnableColliderAfterDelay(collisionDisableDelay));
@@ -59,9 +59,6 @@ public class EnemyScript : MonoBehaviour
             walkingDirection *= -1;
         }
     }
-
-
-
     private IEnumerator EnableColliderAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);

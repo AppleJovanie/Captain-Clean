@@ -18,9 +18,15 @@ public class Impetaigor : MonoBehaviour
     public GameObject youWonCanvas;
 
     [SerializeField] public int bulletsToDestroyBoss = 15; // Number of bullets required to destroy the boss
+    [SerializeField] private FloatingHealthBar healthBar;
 
+    public void Awake()
+    {
+        healthBar = GetComponentInChildren<FloatingHealthBar>();
+    }
     private void Start()
     {
+        healthBar.SetMaxHealth(bulletsToDestroyBoss);
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCollider = GetComponent<Collider2D>();
@@ -60,6 +66,7 @@ public class Impetaigor : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SoapBullet") && !isDead)
         {
+            healthBar.UpdateHealth(bulletsToDestroyBoss - bulletsHitCount);
             // Increment the hit count
             bulletsHitCount++;
 

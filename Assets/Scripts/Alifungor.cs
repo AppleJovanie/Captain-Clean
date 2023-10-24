@@ -17,13 +17,20 @@ public class Alifungor : MonoBehaviour
     private bool isDead = false; // Flag to track if the boss is already dead
     public GameObject youWonCanvas;
 
-    public int bulletsToDestroyBoss = 15; // Number of bullets required to destroy the boss
+    [SerializeField] private int bulletsToDestroyBoss = 15; // Number of bullets required to destroy the boss
+    [SerializeField] private FloatingHealthBar healthBar;
 
+
+    public void Awake()
+    {
+        healthBar = GetComponentInChildren<FloatingHealthBar>();
+    }
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCollider = GetComponent<Collider2D>();
+        healthBar.SetMaxHealth(bulletsToDestroyBoss);
 
         // Find the player's transform based on their tag (assuming the player has the "Player" tag)
         GameObject player = GameObject.FindGameObjectWithTag(playerTag);
@@ -39,6 +46,7 @@ public class Alifungor : MonoBehaviour
         {
             Debug.LogError("Player not found with tag: " + playerTag);
         }
+      
     }
 
     private void Update()
@@ -60,12 +68,13 @@ public class Alifungor : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SoapBullet") && !isDead)
         {
-            // Increment the hit count
+            // Decrement the boss's health
             bulletsHitCount++;
+            healthBar.UpdateHealth(bulletsToDestroyBoss - bulletsHitCount);
 
             if (bulletsHitCount >= bulletsToDestroyBoss)
             {
-                // Call a method to handle boss death (e.g., play a death animation, trigger an event, etc.)
+                // Handle boss death
                 Die();
 
                 if (youWonCanvas != null)

@@ -15,7 +15,8 @@ public class SnapController : MonoBehaviour
     private bool shampooMatched = false;
     private bool soapMatched = false;
     private bool toothbrushMatched = false;
-   private bool allCorrectlyPlaced = false;
+    private bool allCorrectlyPlaced = false;
+
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class SnapController : MonoBehaviour
 
     private void OnDragEnded(Draggable draggable)
     {
+
         float closestDistance = snapRange;
         Transform closestSnapPoint = null;
         bool incorrectPlacement = false;

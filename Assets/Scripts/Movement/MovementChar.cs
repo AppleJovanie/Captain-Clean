@@ -52,9 +52,13 @@ public class MovementChar : MonoBehaviour
             // Reset the object's position to the respawn point
             transform.position = respawnPoint;
         }
+        else if (collision.tag == "Checkpoint")
+        {
+            respawnPoint = transform.position;
+        }
       
         // Finish Line
-        if (collision.gameObject.CompareTag("FinishLine"))
+        else if (collision.gameObject.CompareTag("FinishLine"))
         {
             ShowGameOverUI();
         }    
@@ -83,7 +87,7 @@ public class MovementChar : MonoBehaviour
         state = MovementState.running;
        
     }
-
+   
     public void pointerUpRight()
     {
         moveRight = false;
@@ -119,8 +123,7 @@ public class MovementChar : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-      
+  
 
         rb.velocity = new Vector2(horizontalMove, rb.velocity.y);
     }

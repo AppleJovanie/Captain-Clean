@@ -36,6 +36,8 @@ public class SoapBullet : MonoBehaviour
             }
         }
 
+        Destroy(gameObject);
+
     }
     private void DestroyBoss()
     {

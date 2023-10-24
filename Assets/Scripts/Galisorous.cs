@@ -18,9 +18,15 @@ public class Galisorous : MonoBehaviour
     public GameObject youWonCanvas;
 
     public int bulletsToDestroyBoss = 15; // Number of bullets required to destroy the boss
+    [SerializeField] private FloatingHealthBar healthBar;
 
+    public void Awake()
+    {
+        healthBar = GetComponentInChildren<FloatingHealthBar>();
+    }
     private void Start()
     {
+        healthBar.SetMaxHealth(bulletsToDestroyBoss);
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCollider = GetComponent<Collider2D>();
@@ -60,9 +66,10 @@ public class Galisorous : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SoapBullet") && !isDead)
         {
-            // Increment the hit count
-            bulletsHitCount++;
+            healthBar.UpdateHealth(bulletsToDestroyBoss - bulletsHitCount);
 
+            bulletsHitCount++;
+           
             if (bulletsHitCount >= bulletsToDestroyBoss)
             {
                 // Call a method to handle boss death (e.g., play a death animation, trigger an event, etc.)

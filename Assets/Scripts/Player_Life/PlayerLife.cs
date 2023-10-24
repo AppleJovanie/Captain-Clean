@@ -37,13 +37,14 @@ public class PlayerLife : MonoBehaviour
         else if (ArrayContains(trapses, traps))
         {
             Die();
+            Respawn();
         }
         else if (ArrayContains(Bosses, boss))
         {
             Die();
             if (HealthManager.health <= 0)
             {
-               // RestartGame();
+               RestartGame();
             }
             else
             {
@@ -68,7 +69,7 @@ public class PlayerLife : MonoBehaviour
     {
         if (collision.CompareTag("Checkpoint")|| collision.CompareTag("HeadLice"))
         {
-            respawnPoint = collision.transform.position;
+            respawnPoint = transform.position;
         }
        
     }
